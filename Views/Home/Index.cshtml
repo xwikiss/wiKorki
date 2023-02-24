@@ -1,0 +1,79 @@
+﻿@model IEnumerable<HSClass>
+
+@{
+    ViewData["Title"] = "Strona główna";
+}
+
+
+<section class="bg-secondary text-light p-5 text-center text-sm-start">
+    
+    <div class="container">
+        <div class="d-sm-flex justify-content-between  align-items-center">
+            <div>
+                <h1 class="fs-1"><span class="text-dark">witam </span>cię na stronie</h1>
+                <p class="lead my-4 fs-3">
+                    zachęcam do założenia konta, aby być ze mną w kontakcie</br> i wspólnie rozwiązywać matematyczne problemy
+                </p>
+                <h3 class="fs-3 mb-2">wybierz, co cię interesuje: </h3>
+                <div class="btn-group-horizontal mt-2">
+                    <a type="button" class="btn btn-dark btn-duzy " asp-controller="HSClasses" asp-action="Details" asp-route-id="1">klasa 1</a>
+                    <a type="button" class="btn btn-dark btn-duzy" asp-controller="HSClasses" asp-action="Details" asp-route-id="2">klasa 2</a>
+                    <a type="button" class="btn btn-dark btn-duzy" asp-controller="HSClasses" asp-action="Details" asp-route-id="3">klasa 3</a>
+                </div>
+            </div>
+            <img src="~/pics/indexImage1.png" class="d-none d-md-block" style="height:40vh; width:40vh; margin:auto;" />
+        </div>
+    </div>
+</section>
+
+<section class="bg-light p-5 ">
+    <div class="container">
+        <div class="d-md-flex justify-content-between align-items-center">
+            <div class="w-50">
+                <h3 class="mb-3 mb-md-0 border-red" > <i class="bi bi-hourglass-split fs-3"></i> do matury pozostało...</h3>
+            </div>
+
+            <div class="input-group news-input align-items-center justify-content-center" >
+                
+                    <div class="time-left mx-3 text-center">
+                        <h3 id="d" class="py-2 px-3 rounded-bottom red-shadow"  >00</h3>
+                        <h2>dni</h2>
+                    </div>
+                    <div class="time-left  mx-3 text-center">
+                        <h3 id="h" class="red-shadow py-2 px-3 rounded-bottom "> 00</h3>
+                        <h2>godziny</h2>
+                    </div>
+                    <div class="time-left  mx-3 text-center">
+                        <h3 id="m" class="red-shadow py-2 px-3 rounded-bottom ">00</h3>
+                        <h2>minuty</h2>
+                    </div>
+                    <div class="time-left mx-3 text-center">
+                        <h3 id="s" class="red-shadow py-2 px-3 rounded-bottom ">00</h3>
+                        <h2>sekundy</h2>
+                    </div>
+
+                
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="_AboutMe" />
+
+<script>
+    var countDownDate = new Date("May 08, 2023 09:00:00").getTime();
+    var x = setInterval(function () {
+
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        var d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var s = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('d').innerHTML = d;
+        document.getElementById('h').innerHTML = h;
+        document.getElementById('m').innerHTML = m;
+        document.getElementById('s').innerHTML = s;
+    }, 1000);
+</script>

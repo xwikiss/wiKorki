@@ -1,0 +1,67 @@
+﻿body {
+    background-image: url("../pics/mathboard.jpg");
+    background-size: cover;
+    opacity:0.95;
+}
+.bg-333 {
+    background-color: #333;
+}
+.d-flex{
+    min-height:100vh;
+}
+.border-bottom-secondary{
+    border-bottom: 1px solid rgba(0,0,0, 0.5);
+}
+.border-top-secondary {
+    border-top: 1px solid rgba(0,0,0, 0.5);
+}
+.border-red {
+    border-bottom: 2px rgb( 120, 21, 21) solid;
+}
+.red-shadow {
+    box-shadow: -6px 6px 8px 0px rgb( 120, 21, 21);
+    -webkit-box-shadow: -6px 6px 8px 0px RGB( 120, 21, 21);
+    -moz-box-shadow: -6px 6px 8px 0px rgb( 120, 21, 21);
+    border: 2px rgb( 120, 21, 21) solid;
+}
+.text-brand{
+    color:rgb( 120, 21, 21);
+}
+.hover:hover{
+    color:brown;
+}
+.link-title {
+    color: white;
+    font-size: 2vh;
+    transition: all .3s ease-in-out;
+    display: inline-block;
+}
+
+    .link-title:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        font-weight: bolder;
+    }
+
+a{
+    color:white;
+}
+.btn-duzy{
+    padding: 10px 50px;
+    transition: transform 0.3s ease-in-out;
+}
+.btn-duzy:hover{
+    background:rgb( 120, 21, 21);
+    color:white;
+    transform: scale(1.1);
+    font-weight:bolder;
+}
+.nav-link:hover{
+
+}
+.text-333 {
+    color: #333;
+}
+
+
+

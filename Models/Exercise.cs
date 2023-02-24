@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MaturaToBzdura.Models
+{
+    public class Exercise
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Content { get; set; }
+        public Chapter Chapter { get; set; }
+    }
+}

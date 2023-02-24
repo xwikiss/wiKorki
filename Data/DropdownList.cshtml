@@ -1,0 +1,81 @@
+﻿<ul class="nav nav-pills text-muted">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           data-toggle="dropdown"
+           role="button"
+           aria-haspopup="true"
+           aria-expanded="false"
+           asp-controller="KlasaLiceums"
+           asp-action="Klasa"
+           asp-route-id="1">
+            Klasa 1
+        </a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item"
+               asp-controller="Rozdzials"
+               asp-action="Details"
+               asp-route-id="1">
+                Liczby rzeczywiste
+            </a>
+            <a class="dropdown-item"
+               asp-controller="Rozdzials"
+               asp-action="Details"
+               asp-route-id="2">
+                Język matematyki
+            </a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           data-toggle="dropdown"
+           role="button"
+           aria-haspopup="true"
+           aria-expanded="false"
+           asp-controller="KlasaLiceums"
+           asp-action="Klasa"
+           asp-route-id="2">
+            Klasa 1
+        </a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item"
+               asp-controller="Rozdzials"
+               asp-action="Details"
+               asp-route-id="7">
+                Funkcja kwadratowa
+            </a>
+            <a class="dropdown-item"
+               asp-controller="Rozdzials"
+               asp-action="Details"
+               asp-route-id="8">
+                Rachunek Prawdopodobieństwa
+            </a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"
+           data-toggle="dropdown"
+           role="button"
+           aria-haspopup="true"
+           aria-expanded="false"
+           asp-controller="KlasaLiceums"
+           asp-action="Klasa"
+           asp-route-id="3">
+            Klasa 3
+        </a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item"
+               asp-controller="Rozdzials"
+               asp-action="Details"
+               asp-route-id="13">
+                Funkcja wykładnicza
+            </a>
+            <a class="dropdown-item"
+               asp-controller="Rozdzials"
+               asp-action="Details"
+               asp-route-id="14">
+                Funkcja logarytmiczna
+            </a>
+        </div>
+    </li>
+</ul>

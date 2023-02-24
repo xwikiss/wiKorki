@@ -1,0 +1,27 @@
+﻿@model IEnumerable<MaturaToBzdura.Models.Chapter>
+
+@{
+    ViewData["Title"] = "Rozdziały";
+}
+
+<section class="p-5 my-4">
+    <div class="container bg-secondary text-light">
+        
+
+        <h2 class="text-center py-4">rozdziały <i class="bi bi-arrow-down-left-circle"></i></h2>
+        <div class="accordion accordion-flush pb-5">
+            @foreach (var item in Model)
+            {
+                <div class="accordion-item bg-secondary text-light border-bottom border-light py-3 mx-2">
+                    <a asp-controller="Rozdzials" asp-action="Details" asp-route-id="@item.Id">
+                        <p class=" m-0 link-title"> @Html.DisplayFor(modelItem => item.Name)</p>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+
+ 

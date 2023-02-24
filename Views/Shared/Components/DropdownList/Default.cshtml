@@ -1,0 +1,10 @@
+﻿@model IEnumerable<MaturaToBzdura.Models.Chapter>;
+
+        <div class="dropdown-menu text-light bg-dark" aria-labelledby="navbarDropdown">
+            @foreach (var item in Model)
+            {
+            <a class="dropdown-item text-light bg-dark"   asp-controller="Chapters" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+            <div class="dropdown-divider bg-dark"></div>
+            }
+           
+        </div>
