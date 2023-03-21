@@ -6,9 +6,15 @@
 .bg-333 {
     background-color: #333;
 }
-.d-flex{
-    min-height:100vh;
+.d-flex {
+   min-height: 100vh;
 }
+.account-form:hover{
+    background-color:rgb(24 21 21);
+    font-weight:bolder;
+    border:none;
+}
+
 .border-bottom-secondary{
     border-bottom: 1px solid rgba(0,0,0, 0.5);
 }
@@ -63,5 +69,8 @@ a{
     color: #333;
 }
 
-
-
+#account-form:hover {
+    text-decoration: none;
+    color: white;
+   
+}

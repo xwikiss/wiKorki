@@ -1,13 +1,18 @@
 ﻿@model IList<MvcBreadcrumbNode>
 
-@if (Model != null && Model.Count > 0)
-{
-    <ol class="breadcrumb">
-        @foreach (var node in Model)
-        {
-        <li class="breadcrumb-item">
-            <a asp-controller="@node.Controller" asp-action="@node.Action">@node.Title</a>
-        </li>
-        }
-    </ol>
-}
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="container rounded bg-dark text-light">
+            <ol class="breadcrumb mb-0 mt-3 bg-dark">
+                @foreach (var node in Model)
+                {
+                    <li class="breadcrumb-item">
+                        <a id="ala" asp-controller="@node.Controller" asp-action="@node.Action" asp-route-id="@((node as MyMvcBreadcrumbNode)?.Id)">@node.Title</a>
+                    </li>
+                }
+            </ol>
+
+        </div>
+    }
+

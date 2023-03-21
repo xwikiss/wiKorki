@@ -6,7 +6,7 @@
     ViewData["Title"] = "Lista zadań";
 }
 
-<section class="p-5 my-4">
+<section class="p-4 mb-2">
     
     <div class="container bg-secondary text-light">
         <h2 class="text-center py-4">zadania <i class="bi bi-arrow-down-left-circle"></i></h2>
@@ -15,7 +15,7 @@
             @foreach (var item in Model)
             {
                 <div class="accordion-item bg-secondary text-light border-bottom border-light py-3 mx-2">
-                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@item.Id">
+                    <a asp-controller="Exercises" asp-action="Details" asp-route-id="@item.Id">
                         <p class=" m-0 link-title"> @Html.DisplayFor(modelItem => item.Name)</p>
                     </a>
                 </div>

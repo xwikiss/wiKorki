@@ -6,8 +6,10 @@ using MaturaToBzdura.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs.Attributes;
 using SmartBreadcrumbs.Nodes;
+using wiKorki.Data;
 
 namespace MaturaToBzdura.Controllers
 {
@@ -33,22 +35,20 @@ namespace MaturaToBzdura.Controllers
      
         public ActionResult Details(int id)
         {
-            //var rozdzial = _context.Rozdzials.FirstOrDefault(n => n.Id == id);
-           // if (rozdzial == null)
-           // {
-             //   return NotFound();
-          //  }
-           // var klasa = _context.KlasaLiceums.FirstOrDefault(n => n.Id == rozdzial.KlasaLiceum.Id);
-           // if (klasa == null)
-            //{
-              //  return NotFound();
-           // }
+            var chapter = _context.Chapters.Include(c => c.HSClass).FirstOrDefault(c => c.Id == id);
+            if (chapter == null)
+            {
+                return NotFound();
+            }
 
-           // var homeNode = new MvcBreadcrumbNode("Index", "Home", "Strona Główna");
-           // var klasaNode = new MvcBreadcrumbNode("Details", "KlasaLiceums", klasa?.Nazwa ?? "Nieznana klasa") { Parent = homeNode };
-            //var rozdzialNode = new MvcBreadcrumbNode("Details", "Rozdzials", rozdzial.Nazwa) { Parent = klasaNode };
-
-           // ViewData["BreadcrumbNodes"] = new List<MvcBreadcrumbNode> { homeNode, klasaNode, rozdzialNode};
+            var hSClass = chapter.HSClass;
+            
+          
+            var homeNode = new MvcBreadcrumbNode("Index", "Home", "Strona Główna");
+            var hSClassNode = new MyMvcBreadcrumbNode("Details", "HSClasses", hSClass.Name, hSClass.Id) { Parent = homeNode };
+            var chapterNode = new MyMvcBreadcrumbNode("Details", "Chapters", chapter.Name,chapter.Id) { Parent = hSClassNode }; 
+          
+            ViewData["BreadcrumbNodes"] = new List<MvcBreadcrumbNode> { homeNode, hSClassNode, chapterNode};
 
             var result = _context.Exercises.Where(n => n.Chapter.Id == id).ToList();
             return View(result);

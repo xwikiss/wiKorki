@@ -1,0 +1,63 @@
+﻿@model RegisterVM;
+
+@{
+    ViewData["Title"] = "Załóż konto";
+}
+<section style="margin-top:10vh;">
+
+    <div class="rounded mt-5 py-3 container bg-secondary text-light">
+        <h2 class="text-center py-4">załóż nowe konto <i class="bi bi-person-fill-add"></i></h2>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-10 offset-1 text-center alert alert-danger">
+                <span>
+                    <b>Przepraszamy!</b> - @TempData["Error"]
+                </span>
+            </div>
+        }
+        <div class="row">
+            <div class="col-8 offset-2">
+
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="FullName" class="control-label"></label>
+                        <input asp-for="FullName" class="form-control text-light border border-light bg-dark btn-outline-dark" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EmailAddress" class="control-label"></label>
+                        <input asp-for="EmailAddress" class="form-control text-light border border-light bg-dark btn-outline-dark" />
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control text-light border border-light bg-dark btn-outline-dark" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control text-light border border-light bg-dark btn-outline-dark" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control text-light border border-light bg-dark btn-outline-dark" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-outline-success float-right" type="submit" value="Załóż konto" />
+                        <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Index">Anuluj</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>

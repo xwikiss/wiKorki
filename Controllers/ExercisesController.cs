@@ -6,8 +6,10 @@ using MaturaToBzdura.Data;
 using MaturaToBzdura.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs.Attributes;
 using SmartBreadcrumbs.Nodes;
+using wiKorki.Data;
 
 namespace MaturaToBzdura.Controllers
 {
@@ -23,7 +25,7 @@ namespace MaturaToBzdura.Controllers
 
 
 
-        [Breadcrumb(Title = "Zadanie")]
+        
         public ActionResult Index()
         {
             return View();
@@ -33,19 +35,16 @@ namespace MaturaToBzdura.Controllers
       
         public ActionResult Details(int id)
         {
-            //var zadanie = _context.Zadanies.Where(n => n.Id == id).First();
-            
-            //int parentId = (int)TempData["rozdzialId"];
-            //var parent = _context.Rozdzials.Where(n => n.Id == parentId).First();
+            var exercise = _context.Exercises.Include(e => e.Chapter).FirstOrDefault(e => e.Id == id);
+            var chapter = _context.Chapters.Include(c => c.HSClass).FirstOrDefault(c => c.Id == exercise.Chapter.Id);
+            var hSClass = chapter.HSClass;
 
-            //var parentNode = new MvcBreadcrumbNode("Details", "Rozdzials", parent.Nazwa)
-            //{
-             //   RouteValues = new { id = parentId }
-            //};
-            //var zadanieNode = new MvcBreadcrumbNode("Details", "Zadanies", zadanie.Nazwa) { Parent = parentNode } ;
+            var homeNode = new MvcBreadcrumbNode("Index", "Home", "Strona Główna");
+            var hSClassNode = new MyMvcBreadcrumbNode("Details", "HSClasses", hSClass.Name, hSClass.Id) { Parent = homeNode };
+            var chapterNode = new MyMvcBreadcrumbNode("Details", "Chapters", chapter.Name, chapter.Id) { Parent = hSClassNode };
+            var exerciseNode = new MyMvcBreadcrumbNode("Details","Exercises",exercise.Name, exercise.Id) { Parent = chapterNode };
 
-            //ViewData["BreadcrumbNode"] = zadanieNode;
-            //ViewData["Title"] = zadanie.Nazwa;
+            ViewData["BreadcrumbNodes"] = new List<MvcBreadcrumbNode> { homeNode, hSClassNode, chapterNode, exerciseNode};
 
             var result = _context.Exercises.First(n => n.Id == id);
             return View(result);

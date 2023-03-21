@@ -4,7 +4,7 @@
     ViewData["Title"] = "Rozdziały";
 }
 
-<section class="p-5 my-4">
+<section class="p-4 mb-2">
     <div class="container bg-secondary text-light">
         
 
@@ -13,7 +13,7 @@
             @foreach (var item in Model)
             {
                 <div class="accordion-item bg-secondary text-light border-bottom border-light py-3 mx-2">
-                    <a asp-controller="Rozdzials" asp-action="Details" asp-route-id="@item.Id">
+                    <a asp-controller="Chapters" asp-action="Details" asp-route-id="@item.Id">
                         <p class=" m-0 link-title"> @Html.DisplayFor(modelItem => item.Name)</p>
                     </a>
                 </div>

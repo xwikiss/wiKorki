@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs.Attributes;
 using SmartBreadcrumbs.Nodes;
+using wiKorki.Data;
 
 namespace MaturaToBzdura.Controllers
 {
@@ -32,14 +33,14 @@ namespace MaturaToBzdura.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var klasa = await _context.HSClass.Where(n => n.Id == id).FirstAsync();
-            if (klasa == null)
+            var hSClass = await _context.HSClass.FirstOrDefaultAsync(n => n.Id == id);
+            if (hSClass == null)
             {
                 return NotFound();
             }
 
             var homeNode = new MvcBreadcrumbNode("Index", "Home", "Strona Główna");
-            var klasaNode = new MvcBreadcrumbNode("Details", "KlasaLiceums", klasa.Name) { Parent = homeNode };
+            var klasaNode = new MyMvcBreadcrumbNode("Details", "HSClasses", hSClass.Name,hSClass.Id) { Parent = homeNode };
 
             ViewData["BreadcrumbNodes"] = new List<MvcBreadcrumbNode> { homeNode, klasaNode };
 
@@ -51,10 +52,7 @@ namespace MaturaToBzdura.Controllers
         {
             return View();
         }
-        public ActionResult AboutMe()
-        {
-            return View();
-        }
+        
 
         // GET: KlasaLiceumsController/Create
         public ActionResult Create()

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Lista Użytkowników";
+}
+
+
+<section class="p-4 mb-2">
+
+    <div class=" rounded container bg-secondary text-light">
+        <h2 class="text-center py-4">lista użytkowników <i class="bi bi-arrow-down-left-circle"></i></h2>
+        <div class="row">
+            <div class="col-md-8 offset-md-2 text-light " >
+                <table class="table text-light w-100 mx-auto ">
+                    <thead>
+                        <tr class="text-center">
+                            <th><u>@Html.DisplayNameFor(model => model.FullName)</u></th>
+                            <th><u>@Html.DisplayNameFor(model => model.UserName)</u></th>
+                            <th><u>@Html.DisplayNameFor(model => model.Email)</u></th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="text-break">
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.FullName)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+
