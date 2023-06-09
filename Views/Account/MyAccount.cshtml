@@ -5,7 +5,7 @@
 }
 <section class="p-4 mb-2">
     <div class="container bg-secondary text-light">
-        <h2 class="text-center py-4 m-0">moje konto <i class="bi bi-person-circle"></i></h2>
+        <h2 class="text-center py-4 m-0">Moje konto <i class="bi bi-person-circle"></i></h2>
         <div class="row my-2">
             <div class="col-8 offset-2 mb-5 ">
                 <form method="post" asp-action="ChangeCredentials">
@@ -27,13 +27,13 @@
                     @Html.TextBoxFor(m => m.Credentials.EmailAddress, new { @class = "form-control bg-dark text-light" })
                     @Html.ValidationMessageFor(m => m.Credentials.EmailAddress)
                     <div class="form-group my-3">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Zapisz zmiany" />
-                        <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Index">Anuluj</a>
+                        <input class="btn btn-outline-success float-right btn-to-resize" type="submit" value="Zapisz" />
+                        <a class="btn btn-outline-danger btn-to-resize" asp-controller="Home" asp-action="Index">Anuluj</a>
                     </div>
 
                 </form>
-                <a asp-controller="Account" asp-action="ChangePassword" class=" btn btn-lg btn-block btn-dark mb-2">zmień hasło <i class="bi bi-lock-fill"></i></a>
-                <a asp-controller="Account" asp-action="Delete" class="btn btn-block btn-lg btn-dark">usuń konto <i class="bi bi-box-arrow-in-right"></i></a>
+                <a asp-controller="Account" asp-action="ChangePassword" class=" btn btn-lg btn-block btn-dark mb-2">Zmień hasło <i class="bi bi-lock-fill"></i></a>
+                <a asp-controller="Account" asp-action="Delete" class="btn btn-block btn-lg btn-dark ">Usuń konto <i class="bi bi-box-arrow-in-right"></i></a>
 
 
 
@@ -45,3 +45,34 @@
 
     </div>
 </section>
+
+<script>
+
+    window.addEventListener('resize', function () {
+        console.log('Resize event triggered');
+        var screenWidth = window.innerWidth;
+
+
+        if (screenWidth <= 600) {
+
+            var buttons = document.querySelectorAll('.btn-to-resize');
+            buttons.forEach(function (button) {
+                
+                button.classList.add('btn-sm');
+            });
+        } else {
+
+            var buttons = document.querySelectorAll('.btn-to-resize');
+            buttons.forEach(function (button) {
+                button.classList.remove('btn-sm');
+         
+            });
+        }
+    });
+
+    window.addEventListener('load', function () {
+
+        window.dispatchEvent(new Event('resize'));
+    });
+
+</script>

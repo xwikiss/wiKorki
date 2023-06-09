@@ -3,6 +3,16 @@
     background-size: cover;
     opacity:0.95;
 }
+.lg-img {
+    width: 300px;
+    height: 300px;
+}
+
+.sm-img {
+    width: 150px;
+    height: 150px;
+}
+
 .bg-333 {
     background-color: #333;
 }
@@ -38,7 +48,7 @@
 }
 .link-title {
     color: white;
-    font-size: 2vh;
+    font-size: 1rem;
     transition: all .3s ease-in-out;
     display: inline-block;
 }
@@ -73,4 +83,38 @@ a{
     text-decoration: none;
     color: white;
    
+}
+
+@media (max-width: 680px)
+{
+    h3{
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 400px){
+  
+    .timer-title{
+        margin-left:auto;
+        margin-right:auto;
+    }
+}
+
+@media (max-width: 1008px) {
+    .counter{
+        width:50vw;
+        height:30vh;
+    }
+}
+.counter {
+    flex-wrap: wrap;
+}
+
+.timer-title {
+    text-align: center;
+}
+
+.time-left {
+    margin-bottom: 1rem;
+    text-align: center;
 }

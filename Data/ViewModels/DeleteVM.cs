@@ -13,11 +13,7 @@ namespace wiKorki.Data.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Potwierdzenie hasła jest wymagane!")]
-        [Display(Name = "Potwierdź hasło")]
-        [Compare("Password", ErrorMessage = "Hasła są różne")]
-        [DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
+       
     }
 
 }

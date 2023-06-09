@@ -14,9 +14,15 @@ namespace MaturaToBzdura.Controllers
         {
             return View();
         }
-        public ActionResult AboutMe()
+        public ActionResult RenderAboutMeView()
         {
-            return View();
+
+            return View("AboutMe");
+        }
+        public ActionResult RenderAboutMePartial()
+        {
+            
+            return PartialView("_AboutMe");
         }
     }
 }

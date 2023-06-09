@@ -12,7 +12,7 @@ namespace wiKorki.Data.ViewModels
         [Display(Name = "Adres e-mail")]
         public string EmailAddress { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Hasło jest wymagane!")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

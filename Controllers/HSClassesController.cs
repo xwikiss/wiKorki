@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs.Attributes;
 using SmartBreadcrumbs.Nodes;
 using wiKorki.Data;
+using wiKorki.Data.Services;
 
 namespace MaturaToBzdura.Controllers
 {
@@ -18,13 +19,13 @@ namespace MaturaToBzdura.Controllers
     
     public class HSClassesController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IHSClassesService _service;
         private readonly LinkGenerator _linkGenerator;
      
 
-        public HSClassesController(AppDbContext context, LinkGenerator linkGenerator)
+        public HSClassesController(IHSClassesService service, LinkGenerator linkGenerator)
         {
-            _context = context;
+            _service = service;
             _linkGenerator = linkGenerator;
          
         }
@@ -33,7 +34,7 @@ namespace MaturaToBzdura.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var hSClass = await _context.HSClass.FirstOrDefaultAsync(n => n.Id == id);
+            var hSClass = await _service.GetHSClassByIdAsync(id);
             if (hSClass == null)
             {
                 return NotFound();
@@ -44,9 +45,9 @@ namespace MaturaToBzdura.Controllers
 
             ViewData["BreadcrumbNodes"] = new List<MvcBreadcrumbNode> { homeNode, klasaNode };
 
-            var result = await _context.Chapters.Where(n => n.HSClass.Id == id).ToListAsync();
+            var chapters = await _service.GetHSClassesChapters(id);
 
-            return View(result);
+            return View(chapters);
         }
         public ActionResult Index()
         {
@@ -54,67 +55,5 @@ namespace MaturaToBzdura.Controllers
         }
         
 
-        // GET: KlasaLiceumsController/Create
-        public ActionResult Create()
-       {
-            return View();
-        }
-
-        // POST: KlasaLiceumsController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: KlasaLiceumsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: KlasaLiceumsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: KlasaLiceumsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: KlasaLiceumsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

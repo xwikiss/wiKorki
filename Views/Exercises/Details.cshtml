@@ -7,9 +7,19 @@
 <section class="p-4 mb-2">
     <div class="container bg-secondary text-light">
         <h2 class="text-center py-4">@Model.Name</h2>
-        <div class="p-5 " >
-            <img class="mx-auto d-block" style="" src="@Model.Content" alt="exercise-content" />
+        <div class="p-5 text-center">
+            <span  class="lead">@Model.Content</span>
         </div>
+
+
+        <partial name="_AddAnswers" model="@new AddAnswerVM { ExerciseId = Model.Id }" />
+
+        @*display comments*@
+
+        @await Component.InvokeAsync("Comments", new { exerciseId = Model.Id })
+
+        <partial name="_AddComments" model="@new AddCommentVM { ExerciseId = Model.Id }" />
+
     </div>
 </section>
 

@@ -6,30 +6,31 @@
 <section style="margin-top:10vh;">
 
     <div class="rounded mt-5 py-3 container bg-secondary text-light">
-        <h2 class="text-center py-4">usuń konto <i class="bi bi-trash3"></i></h2>
+        <h2 class="text-center py-4">Usuń konto <i class="bi bi-trash3"></i></h2>
 
-       
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-10 offset-1 text-center alert alert-danger">
+                <span>
+                    <b>Przepraszamy!</b> - @TempData["Error"]
+                </span>
+            </div>
+        }
         <div class="row">
             <div class="col-8 offset-2">
-                <p >Czy na pewno chcesz usunąć swoje konto?</p>
+                <p>Czy na pewno chcesz usunąć swoje konto?</p>
                 <form asp-action="Delete">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label asp-for="Password" class="control-label"></label>
-                 
                         <input asp-for="Password" class="form-control text-light border border-light bg-dark btn-outline-dark" />
                         <span asp-validation-for="Password" class="text-danger"> </span>
 
                     </div>
+
                     <div class="form-group">
-                        <label asp-for="ConfirmPassword" class="control-label"></label>
-                       
-                        <input asp-for="ConfirmPassword" class="form-control text-light border border-light bg-dark btn-outline-dark" />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Usuń konto" />
-                        <a class="btn btn-outline-danger" asp-controller="Account" asp-action="MyAccount">Anuluj</a>
+                        <input class="btn btn-outline-success float-right btn-to-resize" type="submit" value="Akceptuj" />
+                        <a class="btn btn-outline-danger btn-to-resize" asp-controller="Account" asp-action="MyAccount">Anuluj</a>
                     </div>
                 </form>
             </div>
@@ -39,3 +40,32 @@
 
 
 </section>
+
+<script>
+
+    window.addEventListener('resize', function () {
+
+        var screenWidth = window.innerWidth;
+
+      
+        if (screenWidth <= 450) {
+
+            var buttons = document.querySelectorAll('.btn-to-resize');
+            buttons.forEach(function (button) {
+                button.classList.add('btn-sm');
+            });
+        } else {
+
+            var buttons = document.querySelectorAll('.btn-to-resize');
+            buttons.forEach(function (button) {
+                button.classList.remove('btn-sm');
+            });
+        }
+    });
+
+    window.addEventListener('load', function () {
+
+        window.dispatchEvent(new Event('resize'));
+    });
+
+</script>

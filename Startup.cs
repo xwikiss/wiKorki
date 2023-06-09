@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using MaturaToBzdura.Data;
+using MaturaToBzdura.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,9 @@ using Microsoft.Extensions.Logging;
 using SmartBreadcrumbs.Extensions;
 using wikorki.Data;
 using wiKorki.Data;
-
+using wiKorki.Data.Base;
+using wiKorki.Data.Services;
+using wiKorki.Models;
 
 namespace MaturaToBzdura
 {
@@ -38,9 +41,17 @@ namespace MaturaToBzdura
             services.AddControllersWithViews();
             services.AddMvc();
 
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+                options.User.RequireUniqueEmail = true; 
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -._@+";
+            }).AddEntityFrameworkStores<AppDbContext>();
+
             services.AddMemoryCache();
             services.AddSession();
+
+            services.AddScoped<IHSClassesService, HSClassesService>();
+            services.AddScoped<IEntityBaseRepository<Answer>, EntityBaseRepository<Answer>>();
+
 
             services.AddAuthentication(options =>
             {
@@ -56,10 +67,11 @@ namespace MaturaToBzdura
                 options.LiClasses = "breadcrumb-item";
                 options.ActiveLiClasses = "breadcrumb-item active";
             });
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, AppDbContext  _context)
         {
             if (env.IsDevelopment())
             {
@@ -92,6 +104,9 @@ namespace MaturaToBzdura
 
             AppDbInitializer.Seed(app);
             AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+
+           
+         
         }
     }
 }

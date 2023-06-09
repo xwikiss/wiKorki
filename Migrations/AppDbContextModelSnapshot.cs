@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MaturaToBzdura.Migrations
+namespace wiKorki.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -94,7 +94,7 @@ namespace MaturaToBzdura.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("HSClassId")
+                    b.Property<int>("HSClassId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -107,6 +107,34 @@ namespace MaturaToBzdura.Migrations
                     b.ToTable("Chapters");
                 });
 
+            modelBuilder.Entity("MaturaToBzdura.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("MaturaToBzdura.Models.Exercise", b =>
                 {
                     b.Property<int>("Id")
@@ -114,7 +142,7 @@ namespace MaturaToBzdura.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("ChapterId")
+                    b.Property<int>("ChapterId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -142,7 +170,7 @@ namespace MaturaToBzdura.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HSClass");
+                    b.ToTable("HSClasses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -276,20 +304,72 @@ namespace MaturaToBzdura.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("wiKorki.Models.Answer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Evaluation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.ToTable("Answers");
+                });
+
             modelBuilder.Entity("MaturaToBzdura.Models.Chapter", b =>
                 {
                     b.HasOne("MaturaToBzdura.Models.HSClass", "HSClass")
-                        .WithMany("Chapters")
-                        .HasForeignKey("HSClassId");
+                        .WithMany("Chapter")
+                        .HasForeignKey("HSClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("HSClass");
+                });
+
+            modelBuilder.Entity("MaturaToBzdura.Models.Comment", b =>
+                {
+                    b.HasOne("MaturaToBzdura.Models.Exercise", "Exercise")
+                        .WithMany("Comments")
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MaturaToBzdura.Models.Exercise", b =>
                 {
                     b.HasOne("MaturaToBzdura.Models.Chapter", "Chapter")
                         .WithMany("Exercises")
-                        .HasForeignKey("ChapterId");
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Chapter");
                 });
@@ -345,14 +425,36 @@ namespace MaturaToBzdura.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("wiKorki.Models.Answer", b =>
+                {
+                    b.HasOne("ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("MaturaToBzdura.Models.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Exercise");
+                });
+
             modelBuilder.Entity("MaturaToBzdura.Models.Chapter", b =>
                 {
                     b.Navigation("Exercises");
                 });
 
+            modelBuilder.Entity("MaturaToBzdura.Models.Exercise", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
             modelBuilder.Entity("MaturaToBzdura.Models.HSClass", b =>
                 {
-                    b.Navigation("Chapters");
+                    b.Navigation("Chapter");
                 });
 #pragma warning restore 612, 618
         }

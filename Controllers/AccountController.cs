@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MaturaToBzdura.Controllers;
 using MaturaToBzdura.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +40,6 @@ namespace wikorki.Controllers
             return View(users);
         }
         public IActionResult Login() => View(new LoginVM());
-      
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
@@ -50,10 +51,22 @@ namespace wikorki.Controllers
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
                 if (passwordCheck)
                 {
+
+                    var returnUrl = HttpContext.Session.GetString("ReturnUrl");
+
+                    HttpContext.Session.Remove("ReturnUrl");
+
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                     TempData["Error"] = "Nieprawidłowy e-mail lub hasło. Proszę spróbuj ponownie!";
                     return View(loginVM);
@@ -61,42 +74,55 @@ namespace wikorki.Controllers
             }
             TempData["Error"] = "Nieprawidłowy e-mail lub hasło. Proszę spróbuj ponownie!";
             return View(loginVM);
-
         }
+
 
         public IActionResult Register() => View(new RegisterVM());
 
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterVM registerVM)
+   
+
+     [HttpPost]
+    public async Task<IActionResult> Register(RegisterVM registerVM)
+    {
+        if (!ModelState.IsValid) return View(registerVM);
+
+        var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
+        if (user != null)
         {
-            if (!ModelState.IsValid) return View(registerVM);
-           
-
-            var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
-            if (user != null)
-            {
-                TempData["Error"] = "Ten adres e-mail jest już zajęty!";
-               
-                return View(registerVM);
-            }
-
-            var newUser = new ApplicationUser()
-            {
-                FullName = registerVM.FullName,
-                Email = registerVM.EmailAddress,
-                UserName = registerVM.EmailAddress
-            };
-            var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
-
-            if (newUserResponse.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-                return View("RegisterCompleted");
-            }
-            else return View("RegisterFailed");
+            TempData["Error"] = "Ten adres e-mail jest już zajęty!";
+            return View(registerVM);
         }
 
-        [HttpPost]
+        var newUser = new ApplicationUser()
+        {
+            FullName = registerVM.FullName,
+            Email = registerVM.EmailAddress,
+            UserName = registerVM.UserName
+        };
+
+        
+        var polishSignsRegex = new Regex(@"[ąęćłńóśźżĄĘĆŁŃÓŚŹŻ]");
+        if (polishSignsRegex.IsMatch(newUser.UserName))
+        {
+            TempData["Error"] = "Nazwa użytkownika nie może zawierać polskich znaków.";
+            return View(registerVM);
+        }
+
+        var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
+
+        if (newUserResponse.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+            return View("RegisterCompleted");
+        }
+        else
+        {
+            TempData["Error"] = "Problem z rejestracją! Spróbuj ponownie.";
+            return View(registerVM);
+        }
+    }
+
+    [HttpPost]
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
@@ -108,12 +134,12 @@ namespace wikorki.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete()
         {
-            // Get the current user
+          
+           
             var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
-                // If the user is not found, return a not found error
                 return NotFound();
             }
 
@@ -126,44 +152,41 @@ namespace wikorki.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(DeleteVM model)
         {
-            // Get the current user
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
             var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
-                // If the user is not found, return a not found error
                 return NotFound();
             }
-            var hasher = new PasswordHasher<IdentityUser>();
-            var hashedPassword = hasher.HashPassword(user, model.Password);
 
-            var isPasswordValid = await _userManager.CheckPasswordAsync(user, hashedPassword);
-
+            var isPasswordValid = await _userManager.CheckPasswordAsync(user,model.Password);
 
             if (!isPasswordValid)
             {
-            
+                TempData["Error"] = "Hasło nieprawidłowe.";
                 return View(model);
             }
 
-            // Delete the user
+         
             var result = await _userManager.DeleteAsync(user);
 
             if (result.Succeeded)
             {
-                // If the deletion succeeded, sign the user out and redirect to the home page
                 await _signInManager.SignOutAsync();
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                // If the deletion failed, display an error message
+           
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-
-                // Return the Delete view with the error messages
                 return View(model);
             }
         }
@@ -212,13 +235,12 @@ namespace wikorki.Controllers
 
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-             // Update the user's account details with the form inputs
+         
                 user.FullName = model.Credentials.FullName;
                 user.UserName = model.Credentials.UserName;
                 user.Email = model.Credentials.EmailAddress;
 
           
-            // Save the updated user details to the database
             var result = await _userManager.UpdateAsync(user);
                 TempData["ChangedCredentials"] = "Zmiany zostały zapisane.";
 

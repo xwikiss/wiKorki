@@ -7,6 +7,6 @@ using Microsoft.AspNetCore.Identity;
 
 public class ApplicationUser : IdentityUser
 {
-    [Display(Name = "Full Name")]
+    [Display(Name = "Imię i Nazwisko")]
     public string FullName { get; set; }
 }

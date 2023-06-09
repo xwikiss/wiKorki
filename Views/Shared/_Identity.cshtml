@@ -4,21 +4,24 @@
 {
     <li class="nav-item dropdown ">
         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopop="true" aria-expanded="false">
-            <h5 class="text-brand">hello @User.Identity.Name </h5>
+            <h5 class="text-brand">Witaj @User.Identity.Name </h5>
         </a>
         <div class="dropdown-menu text-center bg-dark" aria-labelledby="navbarDropdown">
 
             @if (User.IsInRole("Admin"))
             {
-                <a class="dropdown-item text-light bg-dark " asp-controller="Account" asp-action="Users">użytkownicy <i class="bi bi-list"></i></a>
+                <a class="dropdown-item text-light bg-dark " asp-controller="Account" asp-action="Users">Użytkownicy <i class="bi bi-list"></i></a>
                 <div class="dropdown-divider text-light bg-dark"></div>
+
             }
+            <a class="dropdown-item text-light bg-dark " asp-controller="Answers" asp-action="Index">Rozwiązania zadań <i class="bi bi-list"></i></a>
+            <div class="dropdown-divider text-light bg-dark"></div>
             <a class="dropdown-item text-light bg-dark " asp-controller="Account" asp-action="MyAccount">
-                moje konto <i class="bi bi-person-circle"></i>
+                Moje konto <i class="bi bi-person-circle"></i>
             </a>
             <div class="dropdown-divider text-light bg-dark"></div>
             <a class="dropdown-item text-light bg-dark " asp-controller="Account" asp-action="Logout">
-                wyloguj się <i class="bi bi-box-arrow-in-right"></i>
+                Wyloguj się <i class="bi bi-box-arrow-in-right"></i>
             </a>
             <div class="dropdown-divider text-light bg-dark"></div>
         </div>
@@ -30,12 +33,12 @@ else
 {
     <li class="nav-item dropdown ">
         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopop="true" aria-expanded="false">
-            <h5 class="text-brand">logowanie</h5>
+            <h5 class="text-brand">Logowanie</h5>
         </a>
         <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item text-light bg-dark " asp-controller="Account" asp-action="Login">zaloguj się <i class="bi bi-person-fill"></i></a>
+            <a class="dropdown-item text-light bg-dark " asp-controller="Account" asp-action="Login">Zaloguj się <i class="bi bi-person-fill"></i></a>
             <div class="dropdown-divider text-light bg-dark"></div>
-            <a class="dropdown-item text-light bg-dark" asp-controller="Account" asp-action="Register">załóż konto <i class="bi bi-person-add"></i></a>
+            <a class="dropdown-item text-light bg-dark" asp-controller="Account" asp-action="Register">Załóż konto <i class="bi bi-person-add"></i></a>
         </div>
     </li>
 }
