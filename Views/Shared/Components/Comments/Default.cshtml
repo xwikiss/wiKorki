@@ -1,0 +1,61 @@
+﻿@model List<Comment>
+
+@if (Model != null && Model.Any())
+{
+    <div class="container py-5">
+
+        <div class="justify-content-center align-items-center ">
+
+            <div class="col-md-9">
+
+                <h3 class="my-3">Komentarze <i class="bi bi-chat-left-dots"></i></h3>
+
+                @foreach (var comment in Model)
+                {
+
+                    <div class="card mt-3">
+                        <div class="card-body bg-dark">
+                            <p class="card-text">@comment.Text</p>
+                        </div>
+                        <div class="card-footer py-1 text-light text-center bg-secondary">
+
+                            <p class="float-left my-1">@comment.User.UserName, @comment.CreatedAt.ToString("dd/MM/yyyy")</p>
+                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin")) || User.Identity.Name == comment.User.UserName)
+                            {
+                                <button id="delete-comment-@comment.Id" type="button" class="py-1 btn btn-small btn-outline-danger float-right" data-toggle="modal" data-target="#confirmModal" onclick="document.getElementById('comment-id').value = '@comment.Id'">usuń <i class="bi bi-trash3-fill"></i></button>
+
+                            }
+
+                            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body text-dark">
+                                            Czy na pewno chcesz usunąć ten komentarz?
+                                        </div>
+                                        <div class="modal-footer py-2 pr-3">
+                                            <button type="button" class="btn-sm btn-outline-secondary" data-dismiss="modal">Anuluj</button>
+                                            <form id="delete-comment-form" asp-action="Delete" asp-controller="Comment" asp-route-id="id" method="post">
+                                                <input type="hidden" name="id" id="comment-id" value="">
+                                                <button type="submit" class="btn-sm btn-outline-danger">Usuń</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+}
+
+

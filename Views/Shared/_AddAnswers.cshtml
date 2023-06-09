@@ -1,0 +1,28 @@
+﻿@model AddAnswerVM
+
+@if (User.Identity.IsAuthenticated && !(User.IsInRole("Admin")))
+{
+<div class="px-5 py-2">
+    <h3 class="my-3">Twoja odpowiedź <i class="bi bi-pencil"></i></h3>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="col-md-6 alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @using (Html.BeginForm("Create", "Answers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(m => m.ExerciseId)
+        <div class="form-group ">
+            <input class="form-control-file" type="file" name="imageFile" />
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <span class="text-danger">@TempData["ErrorMessage"]</span>
+            }
+
+        </div>
+        <div class="form-group">
+            <button class="btn btn-outline-success float-left" type="submit">dodaj</button>
+        </div>
+    }
+</div>
+}

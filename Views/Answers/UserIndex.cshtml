@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Answer>
+
+@{
+    ViewData["Title"] = "Lista Twoich Rozwiązań";
+}
+
+
+<section class="p-4 mb-2">
+
+    <div class=" rounded container  overflow-auto bg-secondary text-light">
+        <h2 class="text-center py-4">Lista rozwiązań <i class="bi bi-arrow-down-left-circle"></i></h2>
+
+        @if (!Model?.Any() ?? true)
+        {
+            <div class="container col-md-9 text-light text-center py-3 ">
+                <h5><u>Nie posiadasz dodanych rozwiązań</u></h5>
+                <p>Wróć do strony głównej, wybierz zadanie i prześlij swoją odpowiedź!</p>
+                <a type="button" asp-controller="Home" asp-action="Index" class="btn btn-outline-success mb-1">strona główna</a>
+            </div>
+         }
+          else
+          {
+                <div class="row">
+                    <div class="col-md-8 offset-md-2 text-light ">
+                        <table class="table text-light w-100 mx-auto ">
+                            <thead>
+                                <tr class="text-center">
+                                    <th><u>@Html.DisplayNameFor(model => model.Exercise.Name)</u></th>
+                                    <th><u>@Html.DisplayNameFor(model => model.Image)</u></th>
+                                    <th><u>@Html.DisplayNameFor(model => model.Evaluation)</u></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="text-break text-center">
+                                        <td class="align-middle text-center">
+                                            @Html.DisplayFor(modelItem => item.Exercise.Name)
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @if (item.Image != null)
+                                            {
+                                                <a href="@Url.Action("GetImage", "Answers", new { id = item.Id })" target="_blank" class="text-center">Zobacz Rozwiązanie</a>
+                                            }
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @if (item.Evaluation == null)
+                                            {
+                                                <span>Nie oceniono</span>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#ShowEvaluation_@item.Id">
+                                                    zobacz ocenę
+                                                </button>
+
+                                                <div class="modal fade" id="ShowEvaluation_@item.Id" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content text-dark">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Ocena</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>@item.Evaluation</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td>
+                                            <button id="delete-answer-@item.Id" type="button" class="py-1 btn btn-small btn-outline-danger float-right" data-toggle="modal" data-target="#confirmModal2" onclick="document.getElementById('answer-id').value = '@item.Id'">usuń <i class="bi bi-trash3-fill"></i></button>
+
+                                            <div class="modal fade" id="confirmModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body text-dark">
+                                                            Czy na pewno chcesz usunąć to rozwiązanie?
+                                                        </div>
+                                                        <div class="modal-footer py-2 pr-3">
+                                                            <button type="button" class="btn-sm btn-outline-secondary" data-dismiss="modal">Anuluj</button>
+                                                            <form id="delete-answer-form" asp-action="DeleteAnswer" asp-controller="Answers" method="post">
+                                                                <input type="hidden" name="answerId" id="answer-id" value="" />
+                                                                <button type="submit" class="btn-sm btn-outline-danger">Usuń</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                }
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+                }
+
+
+            </div>
+</section>
