@@ -37,7 +37,12 @@
                                 {
                                     <tr class="text-break text-center">
                                         <td class="align-middle text-center">
-                                            @Html.DisplayFor(modelItem => item.Exercise.Name)
+                                            <a asp-controller="Exercises"
+                                               asp-action="Details"
+                                               asp-route-id="@item.Exercise.Id"
+                                               target="_blank">
+                                                    @Html.DisplayFor(modelItem => item.Exercise.Name)
+                                            </a>
                                         </td>
                                         <td class="align-middle text-center">
                                             @if (item.Image != null)
