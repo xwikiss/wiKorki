@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using MaturaToBzdura.Models;
-using wiKorki.Data.Base;
 
 namespace wiKorki.Models
 {
-    public class Answer :IEntityBase
+    public class Answer 
     {
+        [Key]
         public int Id { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
-
 
         public Exercise Exercise { get; set; }
         public int ExerciseId { get; set; }

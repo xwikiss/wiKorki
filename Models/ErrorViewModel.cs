@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace MaturaToBzdura.Models
+﻿namespace MaturaToBzdura.Models
 {
     public class ErrorViewModel
     {
@@ -10,3 +7,5 @@ namespace MaturaToBzdura.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }
+
+

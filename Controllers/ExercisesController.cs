@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MaturaToBzdura.Data;
-using MaturaToBzdura.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SmartBreadcrumbs.Attributes;
 using SmartBreadcrumbs.Nodes;
 using wiKorki.Data;
 
@@ -24,17 +19,10 @@ namespace MaturaToBzdura.Controllers
             _context = context;
             _userManager = userManager;
         }
-      
-
-
-
-        
         public ActionResult Index()
         {
             return View();
         }
-
-        
 
         public ActionResult Details(int id)
         {
@@ -52,7 +40,5 @@ namespace MaturaToBzdura.Controllers
             var result = _context.Exercises.First(n => n.Id == id);
             return View(result);
         }
-
-     
     }
 }

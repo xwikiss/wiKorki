@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using wiKorki.Data.Base;
 
 namespace MaturaToBzdura.Models
 {
-    public class Chapter : IEntityBase
+    public class Chapter
     { 
         [Key]
         public int Id { get; set; }
@@ -20,5 +15,4 @@ namespace MaturaToBzdura.Models
         public List<Exercise> Exercises { get; set; }
        
     }
-
 }

@@ -21,128 +21,118 @@
         }
         else
         {
-        <div class="row">
-            <div class="col-md-8 offset-md-2 text-light ">
-                <table class="table text-light w-100 mx-auto ">
-                    <thead>
-                        <tr class="text-center">
-                            <th><u>@Html.DisplayNameFor(model => model.ApplicationUser.FullName)</u></th>
-                            <th><u>@Html.DisplayNameFor(model => model.Exercise.Name)</u></th>
-                            <th><u>@Html.DisplayNameFor(model => model.Image)</u></th>
-                            <th><u>@Html.DisplayNameFor(model => model.Evaluation)</u></th>
-
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr class="text-break text-center">
-                                <td class="align-middle">
-                                    @Html.DisplayFor(modelItem => item.ApplicationUser.FullName)
-                                </td>
-                                <td class="align-middle text-center">
-                                    <a asp-controller="Exercises" 
-                                       asp-action="Details" 
-                                       asp-route-id="@item.Exercise.Id"
-                                        target="_blank">
-                                        @Html.DisplayFor(modelItem => item.Exercise.Name)
-                                    </a>
-                                </td>
-                                <td class="align-middle text-center">
-                                    @if (item.Image != null)
-                                    {
-                                        <a href="@Url.Action("GetImage", "Answers", new { id = item.Id })" target="_blank" class="text-center">Zobacz Rozwiązanie</a>
-                                    }
-                                </td>
-                                <td class="align-middle text-center">
-                                    @if (item.Evaluation == null)
-                                    {
-                                        <button type="button" class=" py-1 btn btn-small btn-outline-success" data-toggle="modal" data-target="#AddEvaluation_@item.Id">
-                                            dodaj ocenę
-                                        </button>
-
-                                        <div class="modal fade" id="AddEvaluation_@item.Id" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog .modal-dialog-centered" role="document">
-                                                <div class="modal-content text-dark">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Dodaj ocenę</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form asp-controller="Answers" asp-action="AddEvaluation" method="post">
-                                                            <input type="hidden" name="answerId" value="@item.Id" />
-                                                            <div class="form-group">
-                                                                <label for="evaluation">Ocena:</label>
-                                                                <input type="text" class="form-control" id="evaluation" name="evaluation" />
-                                                            </div>
-                                                            <button type="submit" class="btn btn-outline-success">Zapisz</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <button type="button" class=" py-1 btn btn-small btn-outline-primary mb-2" data-toggle="modal" data-target="#ShowEvaluation_@item.Id">
-                                            zobacz
-                                        </button>
-
-                                        <div class="modal fade" id="ShowEvaluation_@item.Id" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog  .modal-dialog-centered " role="document">
-                                                <div class="modal-content text-dark">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Ocena</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>@item.Evaluation</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <button id="delete-evaluation-@item.Id" type="button" class="py-1 btn btn-small btn-outline-danger " data-toggle="modal" data-target="#confirmModal1" onclick="document.getElementById('evaluation-id').value = '@item.Id'">usuń</button>
-
-                                        <div class="modal fade" id="confirmModal1" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-body text-dark">
-                                                        Czy na pewno chcesz usunąć tę ocenę?
-                                                    </div>
-                                                    <div class="modal-footer py-2 pr-3">
-                                                        <button type="button" class="btn-sm btn-outline-secondary" data-dismiss="modal">Anuluj</button>
-                                                        <form id="delete-evaluation-form" asp-action="DeleteEvaluation" asp-controller="Answers" method="post">
-                                                            <input type="hidden" name="answerId" id="evaluation-id" value="" />
-                                                            <button type="submit" class="btn-sm btn-outline-danger">Usuń</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-
-
-
-                                </td>
-
-
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-light ">
+                    <table class="table text-light w-100 mx-auto ">
+                        <thead>
+                            <tr class="text-center">
+                                <th><u>@Html.DisplayNameFor(model => model.ApplicationUser.FullName)</u></th>
+                                <th><u>@Html.DisplayNameFor(model => model.Exercise.Name)</u></th>
+                                <th><u>@Html.DisplayNameFor(model => model.Image)</u></th>
+                                <th><u>@Html.DisplayNameFor(model => model.Evaluation)</u></th>
 
                             </tr>
+                        </thead>
 
-                        }
-                    </tbody>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="text-break text-center">
+                                    <td class="align-middle">
+                                        @Html.DisplayFor(modelItem => item.ApplicationUser.FullName)
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <a asp-controller="Exercises"
+                                           asp-action="Details"
+                                           asp-route-id="@item.Exercise.Id"
+                                           target="_blank">
+                                            @Html.DisplayFor(modelItem => item.Exercise.Name)
+                                        </a>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        @if (item.Image != null)
+                                        {
+                                            <a href="@Url.Action("GetImage", "Answers", new { id = item.Id })" target="_blank" class="text-center">Zobacz Rozwiązanie</a>
+                                        }
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        @if (item.Evaluation == null)
+                                        {
+                                            <button type="button" class=" py-1 btn btn-small btn-outline-success" data-toggle="modal" data-target="#AddEvaluation_@item.Id">
+                                                dodaj ocenę
+                                            </button>
 
-                </table>
+                                            <div class="modal fade" id="AddEvaluation_@item.Id" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog .modal-dialog-centered" role="document">
+                                                    <div class="modal-content text-dark">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Dodaj ocenę</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form asp-controller="Answers" asp-action="AddEvaluation" method="post">
+                                                                <input type="hidden" name="answerId" value="@item.Id" />
+                                                                <div class="form-group">
+                                                                    <label for="evaluation">Ocena:</label>
+                                                                    <input type="text" class="form-control" id="evaluation" name="evaluation" />
+                                                                </div>
+                                                                <button type="submit" class="btn btn-outline-success">Zapisz</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class=" py-1 btn btn-small btn-outline-primary mb-2" data-toggle="modal" data-target="#ShowEvaluation_@item.Id">
+                                                zobacz
+                                            </button>
 
+                                            <div class="modal fade" id="ShowEvaluation_@item.Id" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog  .modal-dialog-centered " role="document">
+                                                    <div class="modal-content text-dark">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Ocena</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>@item.Evaluation</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button id="delete-evaluation-@item.Id" type="button" class="py-1 btn btn-small btn-outline-danger " data-toggle="modal" data-target="#confirmModal1" onclick="document.getElementById('evaluation-id').value = '@item.Id'">usuń</button>
+
+                                            <div class="modal fade" id="confirmModal1" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body text-dark">
+                                                            Czy na pewno chcesz usunąć tę ocenę?
+                                                        </div>
+                                                        <div class="modal-footer py-2 pr-3">
+                                                            <button type="button" class="btn-sm btn-outline-secondary" data-dismiss="modal">Anuluj</button>
+                                                            <form id="delete-evaluation-form" asp-action="DeleteEvaluation" asp-controller="Answers" method="post">
+                                                                <input type="hidden" name="answerId" id="evaluation-id" value="" />
+                                                                <button type="submit" class="btn-sm btn-outline-danger">Usuń</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         }
     </div>
 </section>
- 

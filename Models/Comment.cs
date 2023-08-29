@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using MaturaToBzdura.Models;
 
 namespace MaturaToBzdura.Models
 {
@@ -20,5 +16,4 @@ namespace MaturaToBzdura.Models
         public ApplicationUser User { get; set; }
         public DateTime CreatedAt { get; set; }
     }
-
 }

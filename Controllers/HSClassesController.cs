@@ -1,40 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MaturaToBzdura.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
-using SmartBreadcrumbs.Attributes;
 using SmartBreadcrumbs.Nodes;
 using wiKorki.Data;
-using wiKorki.Data.Services;
 
 namespace MaturaToBzdura.Controllers
 {
-    
-    
     public class HSClassesController : Controller
     {
-        private readonly IHSClassesService _service;
-        private readonly LinkGenerator _linkGenerator;
+        private readonly AppDbContext _context;
      
-
-        public HSClassesController(IHSClassesService service, LinkGenerator linkGenerator)
+        public HSClassesController(AppDbContext context)
         {
-            _service = service;
-            _linkGenerator = linkGenerator;
-         
+            _context = context;
         }
 
-
-
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
-            var hSClass = await _service.GetHSClassByIdAsync(id);
+            var hSClass = _context.HSClasses.FirstOrDefault(h => h.Id == id);
             if (hSClass == null)
             {
                 return NotFound();
@@ -45,15 +29,13 @@ namespace MaturaToBzdura.Controllers
 
             ViewData["BreadcrumbNodes"] = new List<MvcBreadcrumbNode> { homeNode, klasaNode };
 
-            var chapters = await _service.GetHSClassesChapters(id);
-
+            var chapters = _context.Chapters.Where(c => c.HSClassId == id).ToList();
             return View(chapters);
         }
+
         public ActionResult Index()
         {
             return View();
         }
-        
-
     }
 }

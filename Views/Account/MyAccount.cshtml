@@ -8,56 +8,30 @@
         <h2 class="text-center py-4 m-0">Moje konto <i class="bi bi-person-circle"></i></h2>
         <div class="row my-2">
             <div class="col-8 offset-2 mb-5 ">
-                <form method="post" asp-action="ChangeCredentials">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    @if (TempData["ChangedCredentials"] != null)
-                    {
-                        <div class="alert alert-success">@TempData["ChangedCredentials"]</div>
-                    }
 
-                    @Html.LabelFor(m => m.Credentials.FullName, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Credentials.FullName, new { @class = "form-control bg-dark text-light" })
-                    @Html.ValidationMessageFor(m => m.Credentials.FullName)
+                @if (TempData["ChangedCredentials"] != null)
+                {
+                    <div class="alert alert-success text-center">@TempData["ChangedCredentials"]</div>
+                }
 
-                    @Html.LabelFor(m => m.Credentials.UserName, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Credentials.UserName, new { @class = "form-control bg-dark text-light" })
-                    @Html.ValidationMessageFor(m => m.Credentials.UserName)
-
-                    @Html.LabelFor(m => m.Credentials.EmailAddress, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Credentials.EmailAddress, new { @class = "form-control bg-dark text-light" })
-                    @Html.ValidationMessageFor(m => m.Credentials.EmailAddress)
-                    <div class="form-group my-3">
-                        <input class="btn btn-outline-success float-right btn-to-resize" type="submit" value="Zapisz" />
-                        <a class="btn btn-outline-danger btn-to-resize" asp-controller="Home" asp-action="Index">Anuluj</a>
-                    </div>
-
-                </form>
+                <a asp-controller="Account" asp-action="ChangeCredentials" class=" btn btn-lg btn-block btn-dark mb-2">Zmień dane <i class="bi bi-pen"></i></a>
                 <a asp-controller="Account" asp-action="ChangePassword" class=" btn btn-lg btn-block btn-dark mb-2">Zmień hasło <i class="bi bi-lock-fill"></i></a>
                 <a asp-controller="Account" asp-action="Delete" class="btn btn-block btn-lg btn-dark ">Usuń konto <i class="bi bi-box-arrow-in-right"></i></a>
-
-
-
-
-
             </div>
         </div>
-
-
     </div>
 </section>
 
 <script>
-
     window.addEventListener('resize', function () {
         console.log('Resize event triggered');
         var screenWidth = window.innerWidth;
-
 
         if (screenWidth <= 600) {
 
             var buttons = document.querySelectorAll('.btn-to-resize');
             buttons.forEach(function (button) {
-                
+
                 button.classList.add('btn-sm');
             });
         } else {
@@ -65,7 +39,7 @@
             var buttons = document.querySelectorAll('.btn-to-resize');
             buttons.forEach(function (button) {
                 button.classList.remove('btn-sm');
-         
+
             });
         }
     });
@@ -74,5 +48,4 @@
 
         window.dispatchEvent(new Event('resize'));
     });
-
 </script>

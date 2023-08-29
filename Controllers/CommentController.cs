@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MaturaToBzdura.Data;
 using MaturaToBzdura.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +12,6 @@ namespace wiKorki.Controllers
 {
     public class CommentController : Controller
     {
-
         private readonly AppDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -23,6 +20,7 @@ namespace wiKorki.Controllers
             _context = context;
             _userManager = userManager;
         }
+
         public IActionResult Index()
         {
             var comment = _context.Comments.ToList();
@@ -55,13 +53,10 @@ namespace wiKorki.Controllers
                     var commentId = comment.Id;
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Details", "Exercises", new { id = model.ExerciseId });
-                }
-                else
-                {
+                } else { 
                     HttpContext.Session.SetString("ReturnUrl", Url.Action("Details", "Exercises", new { id = model.ExerciseId }));
                     return RedirectToAction("Login", "Account");
                 }
-
             }
             return View(model);
         }
@@ -81,9 +76,5 @@ namespace wiKorki.Controllers
 
             return RedirectToAction("Details", "Exercises", new { id = comment.ExerciseId });
         }
-
-
-
-
     }
 }

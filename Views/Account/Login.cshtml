@@ -1,78 +1,74 @@
 ﻿@model LoginVM;
 
-@{
-    ViewData["Title"] = "Zaloguj się";
+    @{
+        ViewData["Title"] = "Zaloguj się";
+    }
+    <section style="margin-top:5vh;">
+
+        <div class="rounded mt-5 py-3 container bg-secondary text-light">
+            <h2 class="text-center py-4">Zaloguj się do swojego konta <i class="bi bi-person-fill"></i></h2>
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="col-10 offset-1 text-center alert alert-danger">
+                    <span>
+                        <b>Przepraszamy!</b> - @TempData["Error"]
+                    </span>
+                </div>
             }
-<section style="margin-top:5vh;"  >
- 
-    <div class="rounded mt-5 py-3 container bg-secondary text-light">
-        <h2 class="text-center py-4">Zaloguj się do swojego konta <i class="bi bi-person-fill"></i></h2>
+            <div class="row">
+                <div class="col-8 offset-2">
 
-        @if (TempData["Error"] != null)
-        {
-            <div class="col-10 offset-1 text-center alert alert-danger">
-                <span>
-                    <b>Przepraszamy!</b> - @TempData["Error"]
-                </span>
-            </div>
-        }
-        <div class="row">
-            <div class="col-8 offset-2">
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <form asp-action="Login" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="EmailAddress" class="control-label"></label>
+                            <input asp-for="EmailAddress" class="form-control text-light border border-light bg-dark btn-outline-dark" />
+                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label asp-for="EmailAddress" class="control-label"></label>
-                        <input asp-for="EmailAddress" class="form-control text-light border border-light bg-dark btn-outline-dark" />
-                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control text-light border border-light bg-dark btn-outline-dark" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control text-light border border-light bg-dark btn-outline-dark" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <input class="btn btn-outline-success float-right btn-to-resize" type="submit" value="Zaloguj się" />
+                            <a class="btn btn-outline-danger btn-to-resize" asp-controller="Home" asp-action="Index">Anuluj</a>
+                        </div>
+                    </form>
 
-                    <div class="form-group">
-                        <input class="btn btn-outline-success float-right btn-to-resize" type="submit" value="Zaloguj się" />
-                        <a class="btn btn-outline-danger btn-to-resize" asp-controller="Home" asp-action="Index">Anuluj</a>
-                    </div>
-                </form>
-
-                <span class="text-center">Nie posiadasz konta? <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-to-resize">Zarejestruj się</a></span>
+                    <span class="text-center">Nie posiadasz konta? <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-to-resize">Zarejestruj się</a></span>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-   
-</section>
+    <script>
+        window.addEventListener('resize', function () {
 
-<script>
+            var screenWidth = window.innerWidth;
 
-    window.addEventListener('resize', function () {
-        
-        var screenWidth = window.innerWidth;
 
-        
-        if (screenWidth <= 450) {
-           
-            var buttons = document.querySelectorAll('.btn-to-resize');
-            buttons.forEach(function (button) {
-                button.classList.add('btn-sm');
-            });
-        } else {
-          
-            var buttons = document.querySelectorAll('.btn-to-resize');
-            buttons.forEach(function (button) {
-                button.classList.remove('btn-sm');
-            });
-        }
-    });
+            if (screenWidth <= 450) {
 
-    window.addEventListener('load', function () {
-  
-        window.dispatchEvent(new Event('resize'));
-    });
+                var buttons = document.querySelectorAll('.btn-to-resize');
+                buttons.forEach(function (button) {
+                    button.classList.add('btn-sm');
+                });
+            } else {
 
-</script>
+                var buttons = document.querySelectorAll('.btn-to-resize');
+                buttons.forEach(function (button) {
+                    button.classList.remove('btn-sm');
+                });
+            }
+        });
+
+        window.addEventListener('load', function () {
+
+            window.dispatchEvent(new Event('resize'));
+        });
+    </script>

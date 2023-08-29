@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-
-using MaturaToBzdura.Models;
-    namespace MaturaToBzdura.Data.ViewComponents
+namespace MaturaToBzdura.Data.ViewComponents
 {
     public class DropdownList :ViewComponent
     {

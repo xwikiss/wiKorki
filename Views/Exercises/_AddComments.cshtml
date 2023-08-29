@@ -1,12 +1,14 @@
 ﻿@model AddCommentVM
+
+
     <div class="container py-5">
         <div class="justify-content-center align-items-center">
             <div class="col-md-8">
-                
+
                 <h3>Dodaj komentarz <i class="bi bi-send-plus-fill"></i></h3>
 
                 @using (Html.BeginForm("Create", "Comment", FormMethod.Post))
-                 {
+                {
                     @Html.HiddenFor(m => m.ExerciseId)
 
                     <div class="form-group dark-border-focus">
@@ -16,7 +18,7 @@
                     <div class="form-group">
                         <input class="btn btn-outline-success float-left" type="submit" value="dodaj" />
                     </div>
-                 }
+                }
             </div>
         </div>
     </div>
