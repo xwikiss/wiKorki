@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.33027.164
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wiKorki", "wiKorki.csproj", "{D857CD27-FAF8-4EEB-8496-82151ACDD7E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.Moq", "..\TestProject.Moq\TestProject.Moq.csproj", "{7793CCC2-4C94-4B87-9F2B-F257D05BCE55}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{D857CD27-FAF8-4EEB-8496-82151ACDD7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D857CD27-FAF8-4EEB-8496-82151ACDD7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D857CD27-FAF8-4EEB-8496-82151ACDD7E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7793CCC2-4C94-4B87-9F2B-F257D05BCE55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7793CCC2-4C94-4B87-9F2B-F257D05BCE55}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7793CCC2-4C94-4B87-9F2B-F257D05BCE55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7793CCC2-4C94-4B87-9F2B-F257D05BCE55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
